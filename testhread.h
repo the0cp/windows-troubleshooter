@@ -5,6 +5,8 @@
 #include <QProcess>
 #include <QSettings>
 #include <QCoreApplication>
+#include <QDebug>
+#include <QTreeWidgetItem>
 
 #include <unistd.h>
 #include <direct.h>
@@ -21,6 +23,8 @@ public:
 
     void createProcess(QString CMD);
 
+    void updateParentItem(QTreeWidgetItem* Item);
+
     QString getDir();
 signals:
 
@@ -28,6 +32,8 @@ public slots:
     void setFlag(bool flag = false);
 
     void starTest();
+
+    void treeItemChanged(QTreeWidgetItem* item,int column);
 
 };
 

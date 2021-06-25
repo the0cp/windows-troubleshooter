@@ -44,6 +44,14 @@ void tesThread::createProcess(QString CMD)
 void tesThread::testNetwork(QString RESDIR)
 {
     //test network
+
+    /**********************
+     * ping Test:
+     * ping localhost
+     * ping google
+     * ping bing
+     **********************/
+
     QString qnetRes = RESDIR + "\\Network";
 
     QByteArray ba = qnetRes.toLatin1();
@@ -52,38 +60,60 @@ void tesThread::testNetwork(QString RESDIR)
 
     QString qping_localhost = " /c echo [PING LOCALHOST] >> " +
                              qnetRes + "\\ping.txt" +
-                             "&& echo: >> " +
+                             " && ping 127.0.0.1 >> " +
                              qnetRes +
-                             "\\ping.txt && ping 127.0.0.1 >> " +
+                             "\\ping.txt && echo: >> " +
                              qnetRes +
                              "\\ping.txt";
 
     QString qping_google = " /c echo [PING GOOGLE] >> " +
                              qnetRes + "\\ping.txt" +
-                             "&& echo: >> " +
+                             " && ping www.google.com >> " +
                              qnetRes +
-                             "\\ping.txt && ping www.google.com >> " +
+                             "\\ping.txt && echo: >> " +
                              qnetRes +
                              "\\ping.txt";
 
     QString qping_bing = " /c echo [PING BING] >> " +
                              qnetRes + "\\ping.txt" +
-                             "&& echo: >> " +
+                             " && ping www.bing.com >> " +
                              qnetRes +
-                             "\\ping.txt && ping www.bing.com >> " +
+                             "\\ping.txt && echo: >> " +
                              qnetRes +
                              "\\ping.txt";
-
+    qDebug()<<qping_bing<<endl;
+    qDebug()<<qping_google<<endl;
+    qDebug()<<qping_localhost<<endl;
     createProcess(qping_localhost);
     createProcess(qping_google);
     createProcess(qping_bing);
+
+    /**********************
+     * netstat Test
+     * netstat -r
+     * netstat -n
+     * netstat -a
+     **********************/
+
+    QString qnetstat_r = "/c netstat -r >> " +
+                       qnetRes+ "\\netstat.txt";
+    QString qnetstat_n = "/c netstat -n >> " +
+                       qnetRes+ "\\netstat.txt";
+    QString qnetstat_a = "/c netstat -a >> " +
+                       qnetRes+ "\\netstat.txt";
+    createProcess(qnetstat_r);
+        //Displays the contents of the IP routing table.
+    createProcess(qnetstat_n);
+        //Displays active TCP connections.
+    createProcess(qnetstat_a);
+        //Displays all active TCP connections and the TCP and UDP ports on which the computer is listening.
 }
 
 QString tesThread::getDir()
 {
     QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
-    QString qresDir = config -> value("/settings/output").toString() + "/Result";
+    QString qresDir = config -> value("settings/output").toString() + "/Result";
 
     qresDir.replace("/", "\\");
     return qresDir;

@@ -28,6 +28,8 @@ public:
 
     QString getDir();
 
+    void initTree();
+
     void createProcess(QString CMD);
 
     void testNetwork(QString RESDIR);

@@ -39,7 +39,7 @@
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tab_start">
        <attribute name="title">
@@ -118,6 +118,26 @@
           </widget>
          </item>
         </layout>
+       </widget>
+       <widget class="QTreeWidget" name="selectCmd">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>41</y>
+          <width>431</width>
+          <height>211</height>
+         </rect>
+        </property>
+        <column>
+         <property name="text">
+          <string>Command</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Description</string>
+         </property>
+        </column>
        </widget>
       </widget>
      </widget>

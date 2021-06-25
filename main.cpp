@@ -19,6 +19,14 @@ int main(int argc, char *argv[])
             break;
         }
     }
+    QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
+    QByteArray ba = qconfigPath.toLatin1();
+    char* configPath= ba.data();
+    if(access(configPath, 0) == -1)
+    {
+        QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
+        config -> setValue("settings/output", -1);
+    }
 
     sysTest w;
     w.show();
