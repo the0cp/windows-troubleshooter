@@ -8,4 +8,4 @@
   - make a summary
   - ...
 
-## It'll be simple as wel as useful.
+## It'll be simple as well as useful.
