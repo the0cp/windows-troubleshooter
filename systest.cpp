@@ -23,7 +23,8 @@ sysTest::sysTest(QWidget *parent)
     object -> moveToThread(newThread);
 
     connect(ui -> btn_start, SIGNAL(clicked()), object, SLOT(starTest()));
-    connect(ui -> selectCmd,SIGNAL(itemChanged(QTreeWidgetItem*,int)),this,SLOT(treeItemChanged(QTreeWidgetItem*,int)));}
+    connect(ui -> selectCmd, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(treeItemChanged(QTreeWidgetItem *, int)));
+}
 
 sysTest::~sysTest()
 {
@@ -32,16 +33,19 @@ sysTest::~sysTest()
 
 void sysTest::initTree()
 {
+    QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
+    QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
+
     QTreeWidgetItem *rootNetwork = new QTreeWidgetItem(ui -> selectCmd);
     rootNetwork -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt:: ItemIsSelectable);
-    rootNetwork -> setCheckState(0,Qt::Checked);
+
     rootNetwork -> setText(0, "Network");
     rootNetwork -> setText(1, "Test Network");
 
         QTreeWidgetItem *childPing = new QTreeWidgetItem(rootNetwork);
         childPing -> setText(0, "PING");
         childPing -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt:: ItemIsSelectable);
-        childPing -> setCheckState(0, Qt::Checked);
+
 
             QTreeWidgetItem *childPing_l = new QTreeWidgetItem(childPing);
             childPing_l -> setText(0, "localhost");
@@ -58,7 +62,7 @@ void sysTest::initTree()
         QTreeWidgetItem *childNetstat = new QTreeWidgetItem(rootNetwork);
         childNetstat -> setText(0, "NETSTAT");
         childNetstat -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt:: ItemIsSelectable);
-        childNetstat -> setCheckState(0, Qt::Checked);
+
 
             QTreeWidgetItem *childNetstat_r = new QTreeWidgetItem(childNetstat);
             childNetstat_r -> setText(0, "-r");
@@ -71,9 +75,22 @@ void sysTest::initTree()
             QTreeWidgetItem *childNetstat_a = new QTreeWidgetItem(childNetstat);
             childNetstat_a -> setText(0, "-a");
             childNetstat_a -> setText(1, "all active TCP connections & TCP/UDP ports on which the computer is listening");
+
+        if(config -> value("settings/UseDefaultTestItems") == 1)
+        {
+            rootNetwork -> setCheckState(0,Qt::Checked);
+                childPing -> setCheckState(0, Qt::Checked);
+                    childPing_l -> setCheckState(0, Qt::Checked);
+                    childPing_g -> setCheckState(0, Qt::Checked);
+                    childPing_b -> setCheckState(0, Qt::Checked);
+                childNetstat -> setCheckState(0, Qt::PartiallyChecked);
+                    childNetstat_r -> setCheckState(0, Qt::Checked);
+                    childNetstat_n -> setCheckState(0, Qt::Checked);
+                    childNetstat_a -> setCheckState(0, Qt::Unchecked);
+        }
 }
 
-void tesThread::updateParentItem(QTreeWidgetItem* item)
+void sysTest::updateParentItem(QTreeWidgetItem* item)
 {
     QTreeWidgetItem *parent = item->parent();
     if(parent == NULL)
@@ -81,8 +98,8 @@ void tesThread::updateParentItem(QTreeWidgetItem* item)
         return ;
     }
     int selectedCount = 0;
-    int childCount = parent->childCount();
-    for(int i=0; i<childCount; i++)
+    int childCount = parent -> childCount();
+    for(int i = 0; i < childCount; i++)
     {
         QTreeWidgetItem* childItem = parent->child(i);
         if(childItem->checkState(0) == Qt::Checked)
@@ -92,24 +109,30 @@ void tesThread::updateParentItem(QTreeWidgetItem* item)
     }
     if(selectedCount <= 0)
     {
-        parent->setCheckState(0,Qt::Unchecked);
+        parent->setCheckState(0, Qt::Unchecked);
     }
-    else if(selectedCount>0 && selectedCount<childCount)
+    else if(selectedCount > 0 && selectedCount<childCount)
     {
-        parent->setCheckState(0,Qt::PartiallyChecked);
+        parent->setCheckState(0, Qt::PartiallyChecked);
     }
     else if(selectedCount == childCount)
     {
-        parent->setCheckState(0,Qt::Checked);
+        parent->setCheckState(0, Qt::Checked);
     }
 }
 
-void tesThread::treeItemChanged(QTreeWidgetItem* item, int column)
+void sysTest::treeItemChanged(QTreeWidgetItem* item, int column)
 {
+    if( column!=0 )
+    {
+        return;
+    }
+
     if(Qt::Checked == item->checkState(0))
     {
-        int count = item->childCount();
-        if(count >0)
+        // QTreeWidgetItem* parent = item->parent();
+        int count = item -> childCount();
+        if(count > 0)
         {
             for(int i=0; i<count; i++)
             {
@@ -120,7 +143,7 @@ void tesThread::treeItemChanged(QTreeWidgetItem* item, int column)
         {
             updateParentItem(item);
         }
-     }
+    }
     else if(Qt::Unchecked == item->checkState(0))
     {
         int count = item->childCount();

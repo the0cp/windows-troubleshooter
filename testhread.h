@@ -23,7 +23,7 @@ public:
 
     void createProcess(QString CMD);
 
-    void updateParentItem(QTreeWidgetItem* Item);
+    //void updateParentItem(QTreeWidgetItem* Item);
 
     QString getDir();
 signals:
@@ -33,7 +33,7 @@ public slots:
 
     void starTest();
 
-    void treeItemChanged(QTreeWidgetItem* item,int column);
+    //void treeItemChanged(QTreeWidgetItem* item,int column);
 
 };
 

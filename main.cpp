@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     {
         QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
         config -> setValue("settings/output", -1);
+        config -> setValue("settings/UseDefaultTestItems", 1);
     }
 
     sysTest w;

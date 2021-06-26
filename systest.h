@@ -30,6 +30,8 @@ public:
 
     void initTree();
 
+    void updateParentItem(QTreeWidgetItem* item);
+
     void createProcess(QString CMD);
 
     void testNetwork(QString RESDIR);
@@ -40,6 +42,8 @@ private slots:
     void on_browse_clicked();
 
     void on_btn_start_clicked();
+
+    void treeItemChanged(QTreeWidgetItem* item, int column);
 
 private:
     tesThread *object;
