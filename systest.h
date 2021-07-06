@@ -36,6 +36,8 @@ public:
 
     void testNetwork(QString RESDIR);
 
+    void closeEvent(QCloseEvent *event);
+
 private slots:
     //void starTest();
 
