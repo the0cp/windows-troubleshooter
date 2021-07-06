@@ -12,6 +12,7 @@ void tesThread::setFlag(bool flag)
 
 void tesThread::createProcess(QString CMD)
 {
+
     /*
     std::wstring wlpstrstd = CMD.toStdWString();
     LPCWSTR lCMD = wlpstrstd.c_str();
@@ -35,6 +36,7 @@ void tesThread::createProcess(QString CMD)
         CloseHandle(ProcessInfo.hProcess);
     }   //Hide the window -- that's why I don't use system();
     */
+
     QProcess p(0);
         p.start("cmd", QStringList()<<CMD);
         //p.waitForStarted();
@@ -45,14 +47,16 @@ void tesThread::testNetwork(QString RESDIR)
 {
     //test network
 
+    QSettings settings("Theodore Cooper", "Theo's System Test Tool");
+
+    QString qnetRes = RESDIR + "\\Network";
+
     /**********************
      * ping Test:
      * ping localhost
      * ping google
      * ping bing
      **********************/
-
-    QString qnetRes = RESDIR + "\\Network";
 
     QByteArray ba = qnetRes.toLatin1();
     char *netRes = ba.data();
@@ -81,12 +85,24 @@ void tesThread::testNetwork(QString RESDIR)
                              "\\ping.txt && echo: >> " +
                              qnetRes +
                              "\\ping.txt";
-    qDebug()<<qping_bing<<endl;
-    qDebug()<<qping_google<<endl;
-    qDebug()<<qping_localhost<<endl;
-    createProcess(qping_localhost);
-    createProcess(qping_google);
-    createProcess(qping_bing);
+
+    if((Qt::CheckState)settings.value("000").toUInt() == Qt::Checked)
+    {
+        createProcess(qping_localhost);
+    }
+
+    if((Qt::CheckState)settings.value("001").toUInt() == Qt::Checked)
+    {
+        createProcess(qping_google);
+    }
+
+    if((Qt::CheckState)settings.value("002").toUInt() == Qt::Checked)
+    {
+        createProcess(qping_bing);
+    }
+
+
+
 
     /**********************
      * netstat Test
@@ -101,12 +117,27 @@ void tesThread::testNetwork(QString RESDIR)
                        qnetRes+ "\\netstat.txt";
     QString qnetstat_a = "/c netstat -a >> " +
                        qnetRes+ "\\netstat.txt";
-    createProcess(qnetstat_r);
+
+    if((Qt::CheckState)settings.value("010").toUInt() == Qt::Checked)
+    {
+        createProcess(qnetstat_r);
         //Displays the contents of the IP routing table.
-    createProcess(qnetstat_n);
+    }
+
+    if((Qt::CheckState)settings.value("011").toUInt() == Qt::Checked)
+    {
+        createProcess(qnetstat_n);
         //Displays active TCP connections.
-    createProcess(qnetstat_a);
+    }
+
+    if((Qt::CheckState)settings.value("012").toUInt() == Qt::Checked)
+    {
+        createProcess(qnetstat_a);
         //Displays all active TCP connections and the TCP and UDP ports on which the computer is listening.
+    }
+
+
+
 }
 
 QString tesThread::getDir()
