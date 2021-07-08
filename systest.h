@@ -26,6 +26,8 @@ public:
 
     ~sysTest();
 
+
+
     QString getDir();
 
     void initTree();
@@ -47,11 +49,15 @@ private slots:
 
     void treeItemChanged(QTreeWidgetItem* item, int column);
 
+    void stopThread();
+
 private:
     tesThread *object;
 
     QThread *newThread;
 
     Ui::sysTest *ui;
+
+    tesThread *pthreadFinished;
 };
 #endif // SYSTEST_H

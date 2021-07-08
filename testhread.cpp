@@ -43,13 +43,13 @@ void tesThread::createProcess(QString CMD)
         p.waitForFinished();
 }
 
-void tesThread::testNetwork(QString RESDIR)
+void tesThread::testNetwork(QString DIRPATH)
 {
     //test network
 
     QSettings settings("Theodore Cooper", "Theo's System Test Tool");
 
-    QString qnetRes = RESDIR + "\\Network";
+    QString qnetRes = DIRPATH + "\\Network";
 
     /**********************
      * ping Test:
@@ -140,6 +140,60 @@ void tesThread::testNetwork(QString RESDIR)
 
 }
 
+void tesThread::testGeneral(QString DIRPATH)
+{
+    QSettings settings("Theodore Cooper", "Theo's System Test Tool");
+
+    QString qgenRes = DIRPATH + "\\General";
+
+    QByteArray ba = qgenRes.toLatin1();
+    char *genRes = ba.data();
+    mkdir(genRes);
+
+    if((Qt::CheckState)settings.value("100").toUInt() == Qt::Checked)
+    {
+        //win
+    }
+
+    if((Qt::CheckState)settings.value("101").toUInt() == Qt::Checked)
+    {
+        testGen_soft(DIRPATH);
+    }
+
+    if((Qt::CheckState)settings.value("110").toUInt() == Qt::Checked)
+    {
+        //hardware
+    }
+}
+
+void tesThread::testGen_soft(QString DIRPATH)
+{
+
+    QFile file(DIRPATH + "\\General\\Software.txt");
+
+    if(file.open(QIODevice::ReadWrite))
+    {
+        QTextStream stream(&file);
+        QString regStr = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\";
+        QSettings settings(regStr, QSettings::NativeFormat);
+        QStringList regGroups = settings.childGroups();
+        foreach (QString regItem , regGroups)
+        {
+            settings.beginGroup(regItem);
+            QString displayName = settings.value("DisplayName").toString();
+            QString uninstallString = settings.value("UninstallString").toString();
+            if(!displayName.isEmpty())
+            {
+                //qDebug() << "[" << __FUNCTION__ <<__LINE__ << "]:" << displayName << uninstallString;
+                stream << "[" << __FUNCTION__ <<__LINE__ << "]:" << displayName << uninstallString << "\n";
+            }
+            settings.endGroup();
+
+        }
+        file.close();
+    }
+}
+
 QString tesThread::getDir()
 {
     QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
@@ -162,6 +216,8 @@ void tesThread::starTest()
         createProcess(qrmDir);
     }
     mkdir(resDir);
+    testGeneral(qresDir);
     testNetwork(qresDir);
-
+    emit threadFinished();
+    qDebug()<<"emitted"<<endl;
 }

@@ -23,8 +23,11 @@ sysTest::sysTest(QWidget *parent)
     object = new tesThread;
     object -> moveToThread(newThread);
 
+    tesThread *pthreadFinished = new tesThread();
+
     connect(ui -> btn_start, SIGNAL(clicked()), object, SLOT(starTest()));
-    connect(ui -> selectCmd, SIGNAL(itemChanged(QTreeWidgetItem *, int)), this, SLOT(treeItemChanged(QTreeWidgetItem *, int)));
+    connect(pthreadFinished, SIGNAL(threadFinished()), this, SLOT(stopThread()));
+    connect(ui -> selectCmd, SIGNAL(itemChanged(QTreeWidgetItem *,int)), this, SLOT(treeItemChanged(QTreeWidgetItem *,int)));
 }
 
 sysTest::~sysTest()
@@ -129,7 +132,6 @@ void sysTest::initTree()
         }
         else
         {
-            qDebug()<<(Qt::CheckState)settings.value("Network").toUInt()<<endl;
             childPing -> setCheckState(0, (Qt::CheckState)settings.value("00").toUInt());
                 childPing_l -> setCheckState(0, (Qt::CheckState)settings.value("000").toUInt());
                 childPing_g -> setCheckState(0, (Qt::CheckState)settings.value("001").toUInt());
@@ -257,9 +259,15 @@ void sysTest::on_browse_clicked()
     ui -> outputDir -> setText(outputPath);
 }
 
+void sysTest::stopThread()
+{
+    ui -> btn_start -> setDisabled(false);
+    qDebug()<<"done"<<endl;
+}
 
 void sysTest::on_btn_start_clicked()
 {
+    ui -> btn_start -> setDisabled(true);
     qDebug()<<"start thread"<<endl;
     newThread -> start();
     object->setFlag(false);
