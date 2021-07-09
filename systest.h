@@ -58,6 +58,6 @@ private:
 
     Ui::sysTest *ui;
 
-    tesThread *pthreadFinished;
+
 };
 #endif // SYSTEST_H

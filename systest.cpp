@@ -23,10 +23,8 @@ sysTest::sysTest(QWidget *parent)
     object = new tesThread;
     object -> moveToThread(newThread);
 
-    tesThread *pthreadFinished = new tesThread();
-
     connect(ui -> btn_start, SIGNAL(clicked()), object, SLOT(starTest()));
-    connect(pthreadFinished, SIGNAL(threadFinished()), this, SLOT(stopThread()));
+    connect(object, SIGNAL(threadFinished()), this, SLOT(stopThread()), Qt::QueuedConnection);
     connect(ui -> selectCmd, SIGNAL(itemChanged(QTreeWidgetItem *,int)), this, SLOT(treeItemChanged(QTreeWidgetItem *,int)));
 }
 

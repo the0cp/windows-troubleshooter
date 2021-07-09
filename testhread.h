@@ -39,8 +39,6 @@ public slots:
 
     void starTest();
 
-    //void treeItemChanged(QTreeWidgetItem* item,int column);
-
 };
 
 #endif // TESTHREAD_H

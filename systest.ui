@@ -81,11 +81,16 @@
            </sizepolicy>
           </property>
           <property name="styleSheet">
-           <string notr="true">background: rgb(170, 255, 205);
-border-radius: 12px;
-border: none;
-font-size: 15px;
-color: #ffffff
+           <string notr="true">QPushButton{
+     border-radius: 20px;
+     border: 2px solid rgba(8, 90, 228, 50);
+     background:transparent;
+     color:rgba(8, 90, 228, 100);
+ }
+ 
+ QPushButton:hover {
+     background:  rgba(34, 161, 254, 60) ;
+ }
 </string>
           </property>
           <property name="text">
@@ -113,6 +118,20 @@ color: #ffffff
         <string>Options</string>
        </attribute>
        <layout class="QGridLayout" name="gridLayout_3">
+        <item row="1" column="0">
+         <widget class="QTreeWidget" name="selectCmd">
+          <column>
+           <property name="text">
+            <string>Command</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Description</string>
+           </property>
+          </column>
+         </widget>
+        </item>
         <item row="0" column="0">
          <layout class="QHBoxLayout" name="horizontalLayout" stretch="10,90,0">
           <property name="spacing">
@@ -132,7 +151,17 @@ color: #ffffff
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="outputDir"/>
+           <widget class="QLineEdit" name="outputDir">
+            <property name="styleSheet">
+             <string notr="true">	 border: 2px groove rgba(8, 90, 228, 50);
+	border-radius: 20px;
+	selection-color: rgba(34, 161, 254, 30);
+	background-color: transparent;
+	padding:2px 4px
+
+</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="browse">
@@ -154,26 +183,26 @@ color: #ffffff
             <property name="layoutDirection">
              <enum>Qt::LeftToRight</enum>
             </property>
+            <property name="styleSheet">
+             <string notr="true">QPushButton{
+     border-radius: 20px;
+     border: 2px solid rgba(8, 90, 228, 50);
+     background:transparent;
+     color:rgba(8, 90, 228, 100);
+	padding:2px 4px
+ }
+ 
+ QPushButton:hover {
+     background:  rgba(34, 161, 254, 60) ;
+ }
+</string>
+            </property>
             <property name="text">
              <string extracomment="choose an output dir">...</string>
             </property>
            </widget>
           </item>
          </layout>
-        </item>
-        <item row="1" column="0">
-         <widget class="QTreeWidget" name="selectCmd">
-          <column>
-           <property name="text">
-            <string>Command</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Description</string>
-           </property>
-          </column>
-         </widget>
         </item>
        </layout>
       </widget>
