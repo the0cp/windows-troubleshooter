@@ -162,7 +162,7 @@ void tesThread::testGeneral(QString DIRPATH)
 
     if((Qt::CheckState)settings.value("110").toUInt() == Qt::Checked)
     {
-        //hardware
+        testGen_hard(DIRPATH);
     }
 }
 
@@ -177,7 +177,7 @@ void tesThread::testGen_soft(QString DIRPATH)
         QString regStr = "HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\";
         QSettings settings(regStr, QSettings::NativeFormat);
         QStringList regGroups = settings.childGroups();
-        foreach (QString regItem , regGroups)
+        foreach(QString regItem , regGroups)
         {
             settings.beginGroup(regItem);
             QString displayName = settings.value("DisplayName").toString();
@@ -192,6 +192,184 @@ void tesThread::testGen_soft(QString DIRPATH)
         }
         file.close();
     }
+}
+
+void tesThread::testGen_hard(QString DIRPATH)
+{
+    QFile file(DIRPATH + "\\General\\Hardware.txt");
+
+    if(file.open(QIODevice::ReadWrite))
+    {
+        QTextStream stream(&file);
+        stream << "[Local Host]" << endl << localHostName() << endl << endl;
+        stream << "[CPU]" << endl << cpu() << endl << endl;
+        stream << "[Video Card(GPU)]" << endl << gpu() << endl << endl;
+        stream << "[Memory(RAM)]" << endl << ram() << endl << endl;
+        //stream << "[Monitor/Screen]" << endl << screen() << endl << endl;
+    }
+    file.close();
+}
+
+const QString tesThread::localHostName()
+{
+    QString machineName = QHostInfo::localHostName();
+    return machineName;
+}
+
+
+const QString tesThread::mac()
+{
+    QString strMac;
+
+        QList<QNetworkInterface> netList = QNetworkInterface::allInterfaces();
+        foreach(QNetworkInterface item, netList)
+        {
+            if((QNetworkInterface::IsUp & item.flags()) && (QNetworkInterface::IsRunning & item.flags()))
+            {
+                if(strMac.isEmpty() || strMac < item.hardwareAddress())
+                {
+                    strMac = item.hardwareAddress();
+                }
+            }
+        }
+        return strMac;
+}
+
+const QString tesThread::cpu()
+{
+    QSettings *CPU = new QSettings("HKEY_LOCAL_MACHINE\\HARDWARE\\DESCRIPTION\\System\\CentralProcessor\\0",QSettings::NativeFormat);
+    QString m_cpuDescribe = CPU -> value("ProcessorNameString").toString();
+    delete CPU;
+
+    return m_cpuDescribe;
+}
+
+const QString tesThread::gpu()
+{
+    QString dcard;
+    QSettings *DCard = new QSettings("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\services\\nvlddmkm\\Device0",QSettings::NativeFormat);
+    QString type = DCard->value("Device Description").toString();
+    delete DCard;
+
+    QString dType = type;
+    dType.trimmed();
+    if(!dType.isEmpty())
+        dcard = dType;
+
+    DCard = new QSettings("HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Services\\igfx\\Device0",QSettings::NativeFormat);
+    type = DCard->value("Device Description").toString();
+    delete DCard;
+
+    dType = type;
+    dType.trimmed();
+    if(!dType.isEmpty())
+        dcard = dcard + "\n" +dType;
+
+    DCard = new QSettings("HKEY_LOCAL_MACHINE\\SYSTEM\\ControlSet001\\Services\\amdkmdap\\Device0",QSettings::NativeFormat);
+    type = DCard->value("Device Description").toString();
+    delete DCard;
+
+    dType = type;
+    dType.trimmed();
+    if(!dType.isEmpty())
+        dcard = dcard + "\n" +dType;
+
+    dcard.trimmed();
+    return dcard;
+}
+
+const QString tesThread::ram()
+{
+    MEMORYSTATUSEX statex;
+    statex.dwLength = sizeof (statex);
+    GlobalMemoryStatusEx(&statex);
+    int m_totalMem = statex.ullTotalPhys  * 1.0/ GB;
+    double m_freeMem = statex.ullAvailPhys * 1.0 / GB;
+
+    QString m_memDescribe = QString("Free %1 GB / Total %2 GB" ).
+            arg(QString::asprintf("%.2f", m_freeMem)).arg(QString::asprintf("%.2f", m_totalMem));
+
+    return m_memDescribe;
+
+}
+
+const QString tesThread::screen()
+{
+    QString m_screenDescribe = "";
+    QList<QSize> screenSizeList;
+    QList <int> screenCountList;
+
+    for(int i=0; i<QApplication::desktop() -> screenCount(); i++)
+    {
+            QRect screenRect = QApplication::desktop() -> screenGeometry(i);
+            QSize size(screenRect.width(), screenRect.height());
+
+            bool bExist = false;
+            for(int j=0; j<screenSizeList.length(); j++)
+            {
+                QSize existSize = screenSizeList.at(j);
+                if(size == existSize)
+                {
+                    screenCountList[j]++;
+                    bExist = true;
+                    break;
+                }
+            }
+
+            if(!bExist)
+            {
+                screenSizeList.append(size);
+                screenCountList.append(1);
+            }
+        }
+
+        QSize m_maxScreenSize = screenSizeList.at(0);
+        for(int i=0; i<screenSizeList.length(); i++)
+        {
+            int width = screenSizeList.at(i).width();
+            int height = screenSizeList.at(i).height();
+
+            if(width > m_maxScreenSize.width() && height > m_maxScreenSize.height())
+                m_maxScreenSize = screenSizeList.at(i);
+
+            m_screenDescribe += QString ("(%1pixel x %2pixel) x %3个").arg(width).arg(height).arg(screenCountList.at(i));
+            if(i!= screenSizeList.length()-1)
+                m_screenDescribe += ", ";
+        }
+
+        return m_screenDescribe;
+}
+
+const QString tesThread::disk()
+{
+    QString m_diskDescribe = "";
+    double m_maxFreeDisk;
+        QFileInfoList list = QDir::drives();
+        foreach (QFileInfo dir, list)
+        {
+            QString dirName = dir.absolutePath();
+            dirName.remove("/");
+            LPCWSTR lpcwstrDriver = (LPCWSTR)dirName.utf16();
+            ULARGE_INTEGER liFreeBytesAvailable, liTotalBytes, liTotalFreeBytes;
+            if(GetDiskFreeSpaceEx(lpcwstrDriver, &liFreeBytesAvailable, &liTotalBytes, &liTotalFreeBytes) )
+            {
+                QString free = QString::number((double) liTotalFreeBytes.QuadPart / GB, 'f', 1);
+                free += "G";
+                QString all = QString::number((double) liTotalBytes.QuadPart / GB, 'f', 1);
+                all += "G";
+
+                QString str = QString("%1 %2/%3       ").arg(dirName, free, all);
+                m_diskDescribe += str;
+
+                double freeMem = (double) liTotalFreeBytes.QuadPart / GB;
+
+                if(freeMem > m_maxFreeDisk)
+                    m_maxFreeDisk = freeMem;
+            }
+        }
+
+        return m_diskDescribe;
+
 }
 
 QString tesThread::getDir()
