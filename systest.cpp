@@ -265,6 +265,9 @@ void sysTest::stopThread()
 
 void sysTest::on_btn_start_clicked()
 {
+    movie = new QMovie("C:/Users/Admin/Desktop/loading.gif");
+    ui->label->setMovie(movie);
+    movie->start();
     ui -> btn_start -> setDisabled(true);
     qDebug()<<"start thread"<<endl;
     newThread -> start();

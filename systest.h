@@ -11,6 +11,7 @@
 #include <QDebug>
 #include <QProcess>
 #include <QThread>
+#include <QMovie>
 #include "testhread.h"
 
 QT_BEGIN_NAMESPACE
@@ -55,6 +56,8 @@ private:
     tesThread *object;
 
     QThread *newThread;
+
+    QMovie *movie;
 
     Ui::sysTest *ui;
 

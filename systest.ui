@@ -45,33 +45,7 @@
        <attribute name="title">
         <string>Start</string>
        </attribute>
-       <layout class="QGridLayout" name="gridLayout_2" rowstretch="25,3" columnstretch="10,8,10">
-        <item row="1" column="0">
-         <spacer name="horizontalSpacer">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
-        <item row="1" column="2">
-         <spacer name="horizontalSpacer_2">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-          <property name="sizeHint" stdset="0">
-           <size>
-            <width>40</width>
-            <height>20</height>
-           </size>
-          </property>
-         </spacer>
-        </item>
+       <layout class="QGridLayout" name="gridLayout_2" rowstretch="10,2" columnstretch="10,8,10">
         <item row="1" column="1">
          <widget class="QPushButton" name="btn_start">
           <property name="sizePolicy">
@@ -82,7 +56,7 @@
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
-     border-radius: 20px;
+     border-radius: 10px;
      border: 2px solid rgba(8, 90, 228, 50);
      background:transparent;
      color:rgba(8, 90, 228, 100);
@@ -98,18 +72,56 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="1">
-         <spacer name="verticalSpacer">
+        <item row="1" column="2">
+         <spacer name="horizontalSpacer_2">
           <property name="orientation">
-           <enum>Qt::Vertical</enum>
+           <enum>Qt::Horizontal</enum>
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>20</width>
-            <height>40</height>
+            <width>40</width>
+            <height>20</height>
            </size>
           </property>
          </spacer>
+        </item>
+        <item row="1" column="0">
+         <spacer name="horizontalSpacer">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item row="0" column="0" colspan="3">
+         <widget class="QLabel" name="label">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>427</width>
+            <height>193</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>427</width>
+            <height>193</height>
+           </size>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
