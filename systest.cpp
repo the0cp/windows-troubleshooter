@@ -260,18 +260,20 @@ void sysTest::on_browse_clicked()
 void sysTest::stopThread()
 {
     ui -> btn_start -> setDisabled(false);
-    qDebug()<<"done"<<endl;
+    QImage *doneImg = new QImage;
+    doneImg -> load(":/res/done.png");
+    //ui -> label -> setScaledContents(true);
+    ui -> label -> setPixmap(QPixmap::fromImage(*doneImg));
 }
 
 void sysTest::on_btn_start_clicked()
 {
-    movie = new QMovie("C:/Users/Admin/Desktop/loading.gif");
-    ui->label->setMovie(movie);
-    movie->start();
+    QMovie *movie = new QMovie(":/res/loading.gif");
+    ui -> label -> setMovie(movie);
+    movie -> start();
     ui -> btn_start -> setDisabled(true);
-    qDebug()<<"start thread"<<endl;
     newThread -> start();
-    object->setFlag(false);
+    object -> setFlag(false);
 }
 
 void sysTest::closeEvent(QCloseEvent *event)

@@ -57,8 +57,6 @@ private:
 
     QThread *newThread;
 
-    QMovie *movie;
-
     Ui::sysTest *ui;
 
 

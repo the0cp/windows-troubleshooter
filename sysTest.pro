@@ -16,6 +16,8 @@ SOURCES += \
 
 HEADERS += \
     systest.h \
+    systest.h \
+    testhread.h \
     testhread.h
 
 FORMS += \
@@ -30,3 +32,6 @@ CONFIG += embed_translations
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    res.qrc
