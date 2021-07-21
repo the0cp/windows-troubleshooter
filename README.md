@@ -1,7 +1,7 @@
 # Theo's System Test Tool
 > A Qt based tool which could help Windows users test the system easily.
 
-## ***It's a pre-version which means it can't be use now***
+## ***It's a pre-version which means it can't be used now***
 ## What can it do?
   - [x] test network 
   - [ ] check hardisk 
