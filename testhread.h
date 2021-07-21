@@ -25,7 +25,8 @@
 
 #include "ui_systest.h"
 
-#define GB 1024*1024*1024
+#define MB (1024*1024)
+#define GB (1024*1024*1024)
 
 class tesThread : public QObject
 {
@@ -42,6 +43,10 @@ public:
     void testGen_soft(QString DIRPATH);
 
     void testGen_hard(QString DIRPATH);
+
+    quint64 getDiskSpace(QString iDriver, bool flag);
+
+    QStringList getDiskName();
 
     const QString localHostName();
 

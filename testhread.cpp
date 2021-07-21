@@ -204,10 +204,42 @@ void tesThread::testGen_hard(QString DIRPATH)
         stream << "[Local Host]" << endl << localHostName() << endl << endl;
         stream << "[CPU]" << endl << cpu() << endl << endl;
         stream << "[Video Card(GPU)]" << endl << gpu() << endl << endl;
+        stream << "[Disk]" << endl << disk() << endl << endl;
         stream << "[Memory(RAM)]" << endl << ram() << endl << endl;
         //stream << "[Monitor/Screen]" << endl << screen() << endl << endl;
     }
     file.close();
+}
+
+quint64 tesThread::getDiskSpace(QString iDriver, bool flag)
+{
+    LPCWSTR strDriver=(LPCWSTR)iDriver.utf16();
+    ULARGE_INTEGER freeDiskSpaceAvailable, totalDiskSpace, totalFreeDiskSpace;
+
+    GetDiskFreeSpaceEx( strDriver, &freeDiskSpaceAvailable, &totalDiskSpace, &totalFreeDiskSpace) ;
+    if(flag)
+    {
+        return (quint64) totalDiskSpace.QuadPart/MB;
+    }
+    else
+    {
+        return (quint64) totalFreeDiskSpace.QuadPart/MB;
+    }
+}
+
+
+QStringList tesThread::getDiskName()
+{
+    QFileInfoList list = QDir::drives();
+    QStringList diskNameList(NULL);
+
+    for (int i=0; i<list.count(); i++)
+    {
+
+        QString str = list.at(i).absoluteDir().absolutePath();
+        diskNameList.append(str);
+    }
+    return diskNameList;
 }
 
 const QString tesThread::localHostName()
@@ -342,34 +374,21 @@ const QString tesThread::screen()
 
 const QString tesThread::disk()
 {
-    QString m_diskDescribe = "";
-    double m_maxFreeDisk;
-        QFileInfoList list = QDir::drives();
-        foreach (QFileInfo dir, list)
+    QString res;
+    QStringList diskList = getDiskName();
+
+    foreach(QString str, diskList)
+    {
+        if (str.isEmpty())
         {
-            QString dirName = dir.absolutePath();
-            dirName.remove("/");
-            LPCWSTR lpcwstrDriver = (LPCWSTR)dirName.utf16();
-            ULARGE_INTEGER liFreeBytesAvailable, liTotalBytes, liTotalFreeBytes;
-            if(GetDiskFreeSpaceEx(lpcwstrDriver, &liFreeBytesAvailable, &liTotalBytes, &liTotalFreeBytes) )
-            {
-                QString free = QString::number((double) liTotalFreeBytes.QuadPart / GB, 'f', 1);
-                free += "G";
-                QString all = QString::number((double) liTotalBytes.QuadPart / GB, 'f', 1);
-                all += "G";
-
-                QString str = QString("%1 %2/%3       ").arg(dirName, free, all);
-                m_diskDescribe += str;
-
-                double freeMem = (double) liTotalFreeBytes.QuadPart / GB;
-
-                if(freeMem > m_maxFreeDisk)
-                    m_maxFreeDisk = freeMem;
-            }
+            continue;
         }
+        quint64 totalDiskSpace = getDiskSpace(str, true);
+        quint64 freeDiskSpace = getDiskSpace(str, false);
 
-        return m_diskDescribe;
-
+        res = "Flag: " + str + "\n" + "[Total:" + tr("%1").arg(totalDiskSpace) + "MB]" + "\n" + "[Free:" + tr("%1").arg(freeDiskSpace) + "MB]" + "\n";
+    }
+    return res;
 }
 
 QString tesThread::getDir()
