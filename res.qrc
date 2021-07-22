@@ -4,5 +4,6 @@
         <file>res/done.png</file>
         <file>res/theodore-icon.png</file>
         <file>res/windows-icon.png</file>
+        <file>res/logo.png</file>
     </qresource>
 </RCC>

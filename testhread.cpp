@@ -416,5 +416,4 @@ void tesThread::starTest()
     testGeneral(qresDir);
     testNetwork(qresDir);
     emit threadFinished();
-    qDebug()<<"emitted"<<endl;
 }
