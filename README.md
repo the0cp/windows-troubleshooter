@@ -4,8 +4,8 @@
 ## ***It's a pre-version which means it can't be used now***
 ## What can it do?
   - [x] test network 
-  - [ ] check hardisk 
-  - [ ] make a summary
+  - [x] check hardisk 
+  - [] make a summary
   - [ ] ...
 
 ## It'll be simple as well as useful.
