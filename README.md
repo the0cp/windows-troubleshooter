@@ -5,7 +5,7 @@
 ## What can it do?
   - [x] test network 
   - [x] check hardisk 
-  - [] make a summary
+  - [ ] make a summary
   - [ ] ...
 
 ## It'll be simple as well as useful.
