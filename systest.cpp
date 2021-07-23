@@ -6,6 +6,12 @@ sysTest::sysTest(QWidget *parent)
     , ui(new Ui::sysTest)
 {
     ui -> setupUi(this);
+
+    QSettings state("Theodore Cooper", "Theo's System Test Tool");
+    //state.beginGroup();
+    move(state.value("pos", QPoint(200, 200)).toPoint());
+    //state.endGroup();
+
     ui -> outputDir -> setReadOnly(true);
     QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
@@ -35,6 +41,7 @@ sysTest::~sysTest()
 
 void sysTest::initTree()
 {
+    ui -> selectCmd -> header() -> setSectionResizeMode(QHeaderView::ResizeToContents);
     QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
     QSettings settings("Theodore Cooper", "Theo's System Test Tool");
@@ -106,6 +113,10 @@ void sysTest::initTree()
             childAdvan_hardware -> setText(0, "Hardware");
             childAdvan_hardware -> setText(1, "Check your hardwares.");
 
+            QTreeWidgetItem *childAdvan_SERIALCOMM = new QTreeWidgetItem(childAdvan);
+            childAdvan_SERIALCOMM -> setText(0, "Serial Comm");
+            childAdvan_SERIALCOMM -> setText(1, "Get serial informations.");
+
 
     ui -> selectCmd -> expandAll();
 
@@ -125,8 +136,9 @@ void sysTest::initTree()
                 childBasic -> setCheckState(0, Qt::Checked);
                     childBasic_win -> setCheckState(0, Qt::Checked);
                     childBasic_software -> setCheckState(0, Qt::Checked);
-                childAdvan -> setCheckState(0, Qt::Checked);
+                childAdvan -> setCheckState(0, Qt::PartiallyChecked);
                     childAdvan_hardware -> setCheckState(0, Qt::Checked);
+                    childAdvan_SERIALCOMM -> setCheckState(0, Qt::Unchecked);
         }
         else
         {
@@ -144,6 +156,7 @@ void sysTest::initTree()
                 childBasic_software -> setCheckState(0, (Qt::CheckState)settings.value("101").toUInt());
             childAdvan -> setCheckState(0, (Qt::CheckState)settings.value("11").toUInt());
                 childAdvan_hardware -> setCheckState(0, (Qt::CheckState)settings.value("110").toUInt());
+                childAdvan_SERIALCOMM -> setCheckState(0, (Qt::CheckState)settings.value("111").toInt());
 
         }
 }
@@ -284,9 +297,15 @@ void sysTest::on_btn_start_clicked()
 
 void sysTest::closeEvent(QCloseEvent *event)
 {
-    QSettings settings("Theodore Cooper", "Theo's System Test Tool");
-    settings.setValue("geometry", saveGeometry());
-    settings.setValue("windowState", saveState());
+    QSettings state("Theodore Cooper", "Theo's System Test Tool");
+    state.setValue("pos", pos());
+    state.endGroup();
     QMainWindow::closeEvent(event);
+}
+
+
+void sysTest::on_pushButton_clicked()
+{
+    ui -> tabWidget -> setCurrentIndex(1);
 }
 

@@ -152,7 +152,7 @@ void tesThread::testGeneral(QString DIRPATH)
 
     if((Qt::CheckState)settings.value("100").toUInt() == Qt::Checked)
     {
-        //win
+        winInfo(DIRPATH);
     }
 
     if((Qt::CheckState)settings.value("101").toUInt() == Qt::Checked)
@@ -207,6 +207,27 @@ void tesThread::testGen_hard(QString DIRPATH)
         stream << "[Disk]" << endl << disk() << endl << endl;
         stream << "[Memory(RAM)]" << endl << ram() << endl << endl;
         //stream << "[Monitor/Screen]" << endl << screen() << endl << endl;
+    }
+    file.close();
+}
+
+void tesThread::winInfo(QString DIRPATH)
+{
+    QFile file(DIRPATH + "\\General\\Windows Info.txt");
+
+    if(file.open(QIODevice::ReadWrite))
+    {
+        QTextStream stream(&file);
+        stream << "Windows Version: " << QSysInfo::WindowsVersion << endl;
+        stream << "Build Abi: " << QSysInfo::buildAbi() << endl;
+        stream << "Build CPU Architecture: " << QSysInfo::buildCpuArchitecture() << endl;
+        stream << "Current CPU Architecture: " << QSysInfo::currentCpuArchitecture() << endl;
+        stream << "Kernel Type: " << QSysInfo::kernelType() << endl;
+        stream << "Kernel Version: " << QSysInfo::kernelVersion() << endl;
+        stream << "Machine Hostname: " << QSysInfo::machineHostName() << endl;
+        stream << "Pretty Product Name: " << QSysInfo::prettyProductName() << endl;
+        stream << "Product Type: " << QSysInfo::productType() << endl;
+        stream << "Product Version: " << QSysInfo::productVersion() << endl;
     }
     file.close();
 }
@@ -375,6 +396,7 @@ const QString tesThread::screen()
 const QString tesThread::disk()
 {
     QString res;
+    QString ress;
     QStringList diskList = getDiskName();
 
     foreach(QString str, diskList)
@@ -386,8 +408,10 @@ const QString tesThread::disk()
         quint64 totalDiskSpace = getDiskSpace(str, true);
         quint64 freeDiskSpace = getDiskSpace(str, false);
 
-        res = "Flag: " + str + "\n" + "[Total:" + tr("%1").arg(totalDiskSpace) + "MB]" + "\n" + "[Free:" + tr("%1").arg(freeDiskSpace) + "MB]" + "\n";
+        res += ("Flag: " + str + "\n" + "[Total:" + tr("%1").arg(totalDiskSpace) + "MB]" + "\n" + "[Free:" + tr("%1").arg(freeDiskSpace) + "MB]\n");
+
     }
+    qDebug() << res;
     return res;
 }
 

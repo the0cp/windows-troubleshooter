@@ -44,6 +44,8 @@ public:
 
     void testGen_hard(QString DIRPATH);
 
+    void winInfo(QString DIRPATH);
+
     quint64 getDiskSpace(QString iDriver, bool flag);
 
     QStringList getDiskName();
@@ -61,6 +63,8 @@ public:
     const QString screen();
 
     const QString disk();
+
+
 
     void createProcess(QString CMD);
 

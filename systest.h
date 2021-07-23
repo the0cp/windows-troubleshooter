@@ -12,6 +12,7 @@
 #include <QProcess>
 #include <QThread>
 #include <QMovie>
+#include <QSysInfo>
 #include "testhread.h"
 
 QT_BEGIN_NAMESPACE
@@ -51,6 +52,8 @@ private slots:
     void treeItemChanged(QTreeWidgetItem* item, int column);
 
     void stopThread();
+
+    void on_pushButton_clicked();
 
 private:
     tesThread *object;

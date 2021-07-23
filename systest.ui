@@ -45,9 +45,15 @@
        <attribute name="title">
         <string>Start</string>
        </attribute>
-       <layout class="QVBoxLayout" name="verticalLayout">
+       <layout class="QVBoxLayout" name="verticalLayout" stretch="4,1">
+        <property name="spacing">
+         <number>0</number>
+        </property>
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <property name="spacing">
+           <number>0</number>
+          </property>
           <item>
            <widget class="QLabel" name="label">
             <property name="sizePolicy">
@@ -76,7 +82,13 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,3">
+         <layout class="QVBoxLayout" name="verticalLayout_2" stretch="1,5">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <property name="sizeConstraint">
+           <enum>QLayout::SetFixedSize</enum>
+          </property>
           <item>
            <widget class="QLabel" name="label_st">
             <property name="text">
@@ -85,7 +97,10 @@
            </widget>
           </item>
           <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="10,8,10">
+           <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="10,8,2,10">
+            <property name="spacing">
+             <number>0</number>
+            </property>
             <item>
              <spacer name="horizontalSpacer">
               <property name="orientation">
@@ -106,6 +121,12 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="minimumSize">
+               <size>
+                <width>107</width>
+                <height>31</height>
+               </size>
               </property>
               <property name="maximumSize">
                <size>
@@ -128,6 +149,26 @@
               </property>
               <property name="text">
                <string>Start</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QPushButton" name="pushButton">
+              <property name="styleSheet">
+               <string notr="true">QPushButton{
+     border-radius: 10px;
+     border: 2px solid rgba(8, 90, 228, 0);
+     background:transparent;
+     color:rgba(8, 90, 228, 100);
+ }
+ 
+ QPushButton:hover {
+    color:rgba(8, 90, 228, 70);
+ }
+</string>
+              </property>
+              <property name="text">
+               <string>Config -&gt;</string>
               </property>
              </widget>
             </item>
