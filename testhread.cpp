@@ -2,7 +2,7 @@
 
 tesThread::tesThread(QObject *parent) : QObject(parent)
 {
-
+    connect(this, SIGNAL(sendComInfo(QString)), this, SLOT(saveComInfo(QString)));
 }
 
 void tesThread::setFlag(bool flag)
@@ -163,6 +163,11 @@ void tesThread::testGeneral(QString DIRPATH)
     if((Qt::CheckState)settings.value("110").toUInt() == Qt::Checked)
     {
         testGen_hard(DIRPATH);
+    }
+
+    if((Qt::CheckState)settings.value("111").toUInt() == Qt::Checked)
+    {
+        readCom();
     }
 }
 
@@ -411,7 +416,6 @@ const QString tesThread::disk()
         res += ("Flag: " + str + "\n" + "[Total:" + tr("%1").arg(totalDiskSpace) + "MB]" + "\n" + "[Free:" + tr("%1").arg(freeDiskSpace) + "MB]\n");
 
     }
-    qDebug() << res;
     return res;
 }
 
@@ -423,6 +427,33 @@ QString tesThread::getDir()
 
     qresDir.replace("/", "\\");
     return qresDir;
+}
+
+void tesThread::readCom()
+{
+    QList<QSerialPortInfo> list = QSerialPortInfo::availablePorts();
+    foreach (const QSerialPortInfo &serialport, list)
+    {
+        emit sendComInfo("Port Name: " + serialport.portName() +
+                         "\nSerial Number: " + serialport.serialNumber() +
+                         "\nDescription: " + serialport.description() +
+                         "\nManufacturer: " + serialport.manufacturer() +
+                         "\nSystem Location: " + serialport.systemLocation()
+                         );
+
+    }
+}
+
+void tesThread::saveComInfo(QString COM)
+{
+    QFile file(getDir() + "\\General\\Serial Comm.txt");
+
+    if(file.open(QIODevice::ReadWrite))
+    {
+        QTextStream stream(&file);
+        stream << COM;
+    }
+    file.close();
 }
 
 void tesThread::starTest()

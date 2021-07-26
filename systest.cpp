@@ -113,9 +113,9 @@ void sysTest::initTree()
             childAdvan_hardware -> setText(0, "Hardware");
             childAdvan_hardware -> setText(1, "Check your hardwares.");
 
-            QTreeWidgetItem *childAdvan_SERIALCOMM = new QTreeWidgetItem(childAdvan);
-            childAdvan_SERIALCOMM -> setText(0, "Serial Comm");
-            childAdvan_SERIALCOMM -> setText(1, "Get serial informations.");
+            QTreeWidgetItem *childAdvan_serialcomm = new QTreeWidgetItem(childAdvan);
+            childAdvan_serialcomm -> setText(0, "Serial Comm");
+            childAdvan_serialcomm -> setText(1, "Get serial informations.");
 
 
     ui -> selectCmd -> expandAll();
@@ -138,7 +138,7 @@ void sysTest::initTree()
                     childBasic_software -> setCheckState(0, Qt::Checked);
                 childAdvan -> setCheckState(0, Qt::PartiallyChecked);
                     childAdvan_hardware -> setCheckState(0, Qt::Checked);
-                    childAdvan_SERIALCOMM -> setCheckState(0, Qt::Unchecked);
+                    childAdvan_serialcomm -> setCheckState(0, Qt::Unchecked);
         }
         else
         {
@@ -156,7 +156,7 @@ void sysTest::initTree()
                 childBasic_software -> setCheckState(0, (Qt::CheckState)settings.value("101").toUInt());
             childAdvan -> setCheckState(0, (Qt::CheckState)settings.value("11").toUInt());
                 childAdvan_hardware -> setCheckState(0, (Qt::CheckState)settings.value("110").toUInt());
-                childAdvan_SERIALCOMM -> setCheckState(0, (Qt::CheckState)settings.value("111").toInt());
+                childAdvan_serialcomm -> setCheckState(0, (Qt::CheckState)settings.value("111").toInt());
 
         }
 }
@@ -299,7 +299,6 @@ void sysTest::closeEvent(QCloseEvent *event)
 {
     QSettings state("Theodore Cooper", "Theo's System Test Tool");
     state.setValue("pos", pos());
-    state.endGroup();
     QMainWindow::closeEvent(event);
 }
 

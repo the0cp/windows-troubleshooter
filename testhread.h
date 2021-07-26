@@ -1,6 +1,10 @@
 #ifndef TESTHREAD_H
 #define TESTHREAD_H
 
+#include <unistd.h>
+#include <direct.h>
+#include <Windows.h>
+
 #include <QObject>
 #include <QProcess>
 #include <QSettings>
@@ -18,10 +22,12 @@
 #include <QDesktopWidget>
 #include <QFileInfoList>
 #include <QDir>
+#include <QList>
 
-#include <unistd.h>
-#include <direct.h>
-#include <Windows.h>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
+
+
 
 #include "ui_systest.h"
 
@@ -46,6 +52,8 @@ public:
 
     void winInfo(QString DIRPATH);
 
+    void readCom();
+
     quint64 getDiskSpace(QString iDriver, bool flag);
 
     QStringList getDiskName();
@@ -66,16 +74,20 @@ public:
 
 
 
-    void createProcess(QString CMD);
+    void createProcess(QString);
 
     QString getDir();
 signals:
     void threadFinished();
 
+    void sendComInfo(QString COM);
+
 public slots:
     void setFlag(bool flag = false);
 
     void starTest();
+
+    void saveComInfo(QString COM);
 
 };
 
