@@ -5,7 +5,10 @@
 ## What can it do?
   - [x] test network 
   - [x] check hardisk 
-  - [ ] make a summary
-  - [ ] ...
+  - [x] fetch serial info
+  - [x] make a summary
+  - [x] check cpu
+  - [ ] check gpu
+  - [ ] check monitors
 
 ## It'll be simple as well as useful.
