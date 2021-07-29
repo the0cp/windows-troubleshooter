@@ -11,4 +11,4 @@
   - [x] check gpu
   - [ ] check monitors
 
-## It'll be simple as well as useful.
+## It'll be simple.
