@@ -8,7 +8,7 @@
   - [x] fetch serial info
   - [x] make a summary
   - [x] check cpu
-  - [ ] check gpu
+  - [x] check gpu
   - [ ] check monitors
 
 ## It'll be simple as well as useful.
