@@ -202,18 +202,21 @@ void tesThread::testGen_soft(QString DIRPATH)
 void tesThread::testGen_hard(QString DIRPATH)
 {
     QFile file(DIRPATH + "\\General\\Hardware.txt");
-
+    createProcess(gpu());
     if(file.open(QIODevice::ReadWrite))
     {
         QTextStream stream(&file);
         stream << "[Local Host]" << endl << localHostName() << endl << endl;
         stream << "[CPU]" << endl << cpu() << endl << endl;
-        stream << "[Video Card(GPU)]" << endl << gpu() << endl << endl;
+        //stream << "[Video Card(GPU)]" << endl;
+
+        //stream << endl << endl;
         stream << "[Disk]" << endl << disk() << endl << endl;
         stream << "[Memory(RAM)]" << endl << ram() << endl << endl;
         //stream << "[Monitor/Screen]" << endl << screen() << endl << endl;
     }
     file.close();
+
 }
 
 void tesThread::winInfo(QString DIRPATH)
@@ -304,6 +307,7 @@ const QString tesThread::cpu()
 
 const QString tesThread::gpu()
 {
+    /*
     QString dcard;
     QSettings *DCard = new QSettings("HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\services\\nvlddmkm\\Device0",QSettings::NativeFormat);
     QString type = DCard->value("Device Description").toString();
@@ -334,6 +338,13 @@ const QString tesThread::gpu()
 
     dcard.trimmed();
     return dcard;
+    */
+   QString qgpuRes = getDir() + "\\General";
+   QString wmicCmd = "/c wmic path Win32_VideoController get /value >> " +
+                    qgpuRes +
+                    "\\Hardware_GPU.txt";
+   return wmicCmd;
+
 }
 
 const QString tesThread::ram()
