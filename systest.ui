@@ -298,7 +298,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/res/theodore-icon.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/res/logo.png&quot; width=&quot;150&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_3">
@@ -307,18 +307,18 @@
           <x>120</x>
           <y>0</y>
           <width>321</width>
-          <height>161</height>
+          <height>251</height>
          </rect>
         </property>
         <property name="text">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; font-style:italic;&quot;&gt;/* Theo's System Tool */&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Author: Theodore Cooper&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Based on Qt 5.12.11&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Build on Windows 10 x64&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Email: ccooperr2005@gmal.com&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Github: @theodorecooper&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt; font-weight:600; font-style:italic;&quot;&gt;/* Theo's System Tool */&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Based on Qt 5.12.11 (MSVC 2019, 64bit)&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Build on Windows 10 x64&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;License: &lt;/span&gt;&lt;a href=&quot;https://github.com/theodorecooper/Linux-Qt-Bingbg/blob/main/LICENSE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;GPL v3&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Author: Theodore Cooper&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/res/qtrc-gmail.png&quot; width=&quot;12&quot;/&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Email: ccooperr2005@gmail.com&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/res/qtrc-github.png&quot; width=&quot;12&quot;/&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Github: &lt;/span&gt;&lt;a href=&quot;https://www.github.com/theodorecooper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;theodorecooper&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;img src=&quot;:/res/qtrc-twitter.png&quot; width=&quot;12&quot;/&gt;&lt;span style=&quot; font-weight:600; font-style:italic;&quot;&gt;Twitter: &lt;/span&gt;&lt;a href=&quot;https://www.twitter.com/T_Ccooper&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#007af4;&quot;&gt;@T_Ccooper&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_4">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>150</y>
+          <y>110</y>
           <width>151</width>
           <height>101</height>
          </rect>
