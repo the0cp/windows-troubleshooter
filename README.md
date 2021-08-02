@@ -1,7 +1,15 @@
 # Theo's System Test Tool
 > A Qt based tool which could help Windows users test the system easily.
+> Based on Qt 5.12.11 (MSVC 2019, 64bit)
+> Built 
 
-## ***It's a pre-version which means it can't be used now***
+![theoTest](https://github.com/theodorecooper/theoTest/blob/main/res/logo.png)
+
+## How to use?
+  - Set output folder, `C:/` is default.
+  - Select functions you'd like to run.
+  - Start.
+
 ## What can it do?
   - [x] test network 
   - [x] check hardisk 
@@ -9,6 +17,7 @@
   - [x] make a summary
   - [x] check cpu
   - [x] check gpu
-  - [ ] check monitors
+  - [x] check monitors
 
-## It'll be simple.
+## LICENSE
+GPL v3
