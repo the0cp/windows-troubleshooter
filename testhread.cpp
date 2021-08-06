@@ -208,10 +208,11 @@ void tesThread::testGen_hard(QString DIRPATH)
         QTextStream stream(&file);
         stream << "[Local Host]" << endl << localHostName() << endl << endl;
         stream << "[CPU]" << endl << cpu() << endl << endl;
+        stream << "[BIOS]" << endl << "Processor ID: " << getWMIC("wmic cpu get processorid") << endl << endl;
         //stream << "[Video Card(GPU)]" << endl;
 
         //stream << endl << endl;
-        stream << "[Disk]" << endl << disk() << endl << endl;
+        stream << "[Disk]" << endl << disk() << endl;
         stream << "[Memory(RAM)]" << endl << ram() << endl << endl;
         //stream << "[Monitor/Screen]" << endl << screen() << endl << endl;
     }
@@ -424,7 +425,7 @@ const QString tesThread::disk()
         quint64 totalDiskSpace = getDiskSpace(str, true);
         quint64 freeDiskSpace = getDiskSpace(str, false);
 
-        res += ("Flag: " + str + "\n" + "[Total:" + tr("%1").arg(totalDiskSpace) + "MB]" + "\n" + "[Free:" + tr("%1").arg(freeDiskSpace) + "MB]\n");
+        res += ("Flag: " + str + "\n" + "<Total:" + tr("%1").arg(totalDiskSpace) + "MB>" + "\n" + "<Free:" + tr("%1").arg(freeDiskSpace) + "MB>\n");
 
     }
     return res;
@@ -438,6 +439,28 @@ QString tesThread::getDir()
 
     qresDir.replace("/", "\\");
     return qresDir;
+}
+
+QString tesThread::getWMIC(const QString &cmd)
+{
+
+    //CPU NAME: wmic cpu get Name
+    //CPU NOC: wmic cpu get NumberOfCores
+    //CPU NOLP: wmic cpu get NumberOfLogicalProcessors
+    //CPU PROCESSORID: wmic cpu get processorid
+    //BASEBOARD SERIALNUM: wmic baseboard get serialnumber
+    //BIOS SERIALNUM: wmic bios get serialnumber
+    //DISKDRIVER SERIALNUM: wmic diskdrive get serialnumber
+    QProcess p;
+    p.start(cmd);
+    p.waitForFinished();
+    QString result = QString::fromLocal8Bit(p.readAllStandardOutput());
+    QStringList list = cmd.split(" ");
+    result = result.remove(list.last(), Qt::CaseInsensitive);
+    result = result.replace("\r", "");
+    result = result.replace("\n", "");
+    result = result.simplified();
+    return result;
 }
 
 void tesThread::readCom()

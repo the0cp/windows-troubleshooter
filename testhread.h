@@ -77,6 +77,8 @@ public:
     void createProcess(QString);
 
     QString getDir();
+
+    QString getWMIC(const QString &CMD);
 signals:
     void threadFinished();
 
