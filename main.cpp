@@ -19,7 +19,7 @@ int main(int argc, char *argv[])
             break;
         }
     }
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
+    QString qconfigPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/sysTest.ini";
     QByteArray ba = qconfigPath.toLatin1();
     char* configPath= ba.data();
     if(access(configPath, 0) == -1)

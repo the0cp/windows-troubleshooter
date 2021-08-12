@@ -402,7 +402,7 @@ const QString tesThread::screen()
             if(width > m_maxScreenSize.width() && height > m_maxScreenSize.height())
                 m_maxScreenSize = screenSizeList.at(i);
 
-            m_screenDescribe += QString ("(%1pixel x %2pixel) x %3个").arg(width).arg(height).arg(screenCountList.at(i));
+            m_screenDescribe += QString ("(%1pixel x %2pixel) x %3").arg(width).arg(height).arg(screenCountList.at(i));
             if(i!= screenSizeList.length()-1)
                 m_screenDescribe += ", ";
         }
@@ -433,7 +433,7 @@ const QString tesThread::disk()
 
 QString tesThread::getDir()
 {
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
+    QString qconfigPath = QCoreApplication::applicationDirPath() + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
     QString qresDir = config -> value("settings/output").toString() + "/Result";
 

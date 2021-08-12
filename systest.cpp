@@ -13,7 +13,7 @@ sysTest::sysTest(QWidget *parent)
     //state.endGroup();
 
     ui -> outputDir -> setReadOnly(true);
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
+    QString qconfigPath = QCoreApplication::applicationDirPath() + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
 
     if(config -> value("settings/output").toInt() == -1)
@@ -42,7 +42,7 @@ sysTest::~sysTest()
 void sysTest::initTree()
 {
     ui -> selectCmd -> header() -> setSectionResizeMode(QHeaderView::ResizeToContents);
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
+    QString qconfigPath = QCoreApplication::applicationDirPath() + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
     QSettings settings("Theodore Cooper", "Theo's System Test Tool");
 
@@ -260,7 +260,7 @@ void sysTest::on_browse_clicked()
                                                           QFileDialog::ShowDirsOnly
                                                           | QFileDialog::DontResolveSymlinks);
     //output_path.replace("/", "\\");
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/config.ini";
+    QString qconfigPath = QCoreApplication::applicationDirPath() + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
     if(config -> value("settings/output").toInt() == -1)
     {
@@ -275,6 +275,8 @@ void sysTest::stopThread()
     QString outputPath = ui -> outputDir -> text();
     QString finishedInfo = "Done! Go to \"" + outputPath + "/Result\" to check the result.";
     ui -> btn_start -> setDisabled(false);
+    ui -> btn_config -> setDisabled(false);
+    ui -> tabWidget -> setTabEnabled(1, true);
     ui -> label_st -> setAlignment(Qt::AlignCenter);
     ui -> label_st -> setText(finishedInfo);
     QImage *doneImg = new QImage;
@@ -289,6 +291,8 @@ void sysTest::on_btn_start_clicked()
     ui -> label -> setMovie(movie);
     movie -> start();
     ui -> btn_start -> setDisabled(true);
+    ui -> btn_config -> setDisabled(true);
+    ui -> tabWidget -> setTabEnabled(1, false);
     ui -> label_st -> setAlignment(Qt::AlignCenter);
     ui -> label_st -> setText("We are testing your system. It may take a few moments...");
     newThread -> start();

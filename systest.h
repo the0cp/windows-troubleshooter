@@ -5,6 +5,7 @@
 #include <direct.h>
 
 #include <QMainWindow>
+#include <QStandardPaths>
 #include <QString>
 #include <QFileDialog>
 #include <QSettings>
