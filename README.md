@@ -19,5 +19,9 @@
   - [x] check gpu
   - [x] check monitors
 
+## TODO
+  - [ ] i18n
+  - [ ] Better UI
+
 ## LICENSE
 GPL v3
