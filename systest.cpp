@@ -13,7 +13,7 @@ sysTest::sysTest(QWidget *parent)
     //state.endGroup();
 
     ui -> outputDir -> setReadOnly(true);
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/sysTest.ini";
+    QString qconfigPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
 
     if(config -> value("settings/output").toInt() == -1)
@@ -42,7 +42,7 @@ sysTest::~sysTest()
 void sysTest::initTree()
 {
     ui -> selectCmd -> header() -> setSectionResizeMode(QHeaderView::ResizeToContents);
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/sysTest.ini";
+    QString qconfigPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
     QSettings settings("Theodore Cooper", "Theo's System Test Tool");
 
@@ -260,7 +260,7 @@ void sysTest::on_browse_clicked()
                                                           QFileDialog::ShowDirsOnly
                                                           | QFileDialog::DontResolveSymlinks);
     //output_path.replace("/", "\\");
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/sysTest.ini";
+    QString qconfigPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
     if(config -> value("settings/output").toInt() == -1)
     {

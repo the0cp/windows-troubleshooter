@@ -433,7 +433,7 @@ const QString tesThread::disk()
 
 QString tesThread::getDir()
 {
-    QString qconfigPath = QCoreApplication::applicationDirPath() + "/sysTest.ini";
+    QString qconfigPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
     QString qresDir = config -> value("settings/output").toString() + "/Result";
 

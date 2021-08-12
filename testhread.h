@@ -9,6 +9,7 @@
 #include <QProcess>
 #include <QSettings>
 #include <QCoreApplication>
+#include <QStandardPaths>
 #include <QDebug>
 #include <QTreeWidgetItem>
 #include <QFile>
