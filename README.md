@@ -1,7 +1,7 @@
-# Theo's System Test Tool
-> A Qt based tool which could help Windows users test the system easily.
+# Theo's Windows Troubleshooter
+> A Qt based tool which could help Windows users test the system & find problems easily.
 > Based on Qt 5.12.11 (MSVC 2019, 64bit)
-> Built 
+> Built on Windows 10 Pro 21H1(x64)
 
 ![theoTest](https://github.com/theodorecooper/theoTest/blob/main/res/logo.png)
 
