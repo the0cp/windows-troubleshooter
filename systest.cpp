@@ -322,3 +322,20 @@ void sysTest::on_btn_config_clicked()
     ui -> tabWidget -> setCurrentIndex(1);
 }
 
+
+void sysTest::on_btn_open_folder_clicked()
+{
+    QString outputPath = "file:" + ui -> outputDir -> text() + "/Result";
+    QByteArray ba = outputPath.toLatin1();
+
+    if(access(ba.data(), 0) == -1)
+    {
+        QMessageBox msg(QMessageBox::Warning, "Warning", "Cannot find \"" + ui -> outputDir -> text() + "\" !!!");
+        msg.exec();
+    }
+    else
+    {
+        QDesktopServices::openUrl(QUrl(outputPath, QUrl::TolerantMode));
+    }
+}
+

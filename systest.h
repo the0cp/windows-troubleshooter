@@ -8,12 +8,14 @@
 #include <QStandardPaths>
 #include <QString>
 #include <QFileDialog>
+#include <QMessageBox>
 #include <QSettings>
 #include <QDebug>
 #include <QProcess>
 #include <QThread>
 #include <QMovie>
 #include <QSysInfo>
+#include <QDesktopServices>
 #include "testhread.h"
 
 QT_BEGIN_NAMESPACE
@@ -56,6 +58,8 @@ private slots:
 
 
     void on_btn_config_clicked();
+
+    void on_btn_open_folder_clicked();
 
 private:
     tesThread *object;
