@@ -9,6 +9,8 @@
 #include <QProcess>
 #include <QSettings>
 #include <QCoreApplication>
+#include <QWidget>
+#include <QScreen>
 #include <QStandardPaths>
 #include <QDebug>
 #include <QTreeWidgetItem>
@@ -20,7 +22,6 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QNetworkReply>
-#include <QDesktopWidget>
 #include <QFileInfoList>
 #include <QDir>
 #include <QList>

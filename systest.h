@@ -54,7 +54,8 @@ private slots:
 
     void stopThread();
 
-    void on_pushButton_clicked();
+
+    void on_btn_config_clicked();
 
 private:
     tesThread *object;

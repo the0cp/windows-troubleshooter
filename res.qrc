@@ -9,5 +9,7 @@
         <file>res/qtrc-gmail.png</file>
         <file>res/qtrc-twitter.png</file>
         <file>res/theotest.ico</file>
+        <file>res/icon-about.png</file>
+        <file>res/icon-options.png</file>
     </qresource>
 </RCC>

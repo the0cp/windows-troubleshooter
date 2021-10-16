@@ -1,5 +1,6 @@
 #include "testhread.h"
 
+
 tesThread::tesThread(QObject *parent) : QObject(parent)
 {
     connect(this, SIGNAL(sendComInfo(QString)), this, SLOT(saveComInfo(QString)));
@@ -112,11 +113,11 @@ void tesThread::testNetwork(QString DIRPATH)
      **********************/
 
     QString qnetstat_r = "/c netstat -r >> " +
-                       qnetRes+ "\\netstat.txt";
+                       qnetRes + "\\netstat.txt";
     QString qnetstat_n = "/c netstat -n >> " +
-                       qnetRes+ "\\netstat.txt";
+                       qnetRes + "\\netstat.txt";
     QString qnetstat_a = "/c netstat -a >> " +
-                       qnetRes+ "\\netstat.txt";
+                       qnetRes + "\\netstat.txt";
 
     if((Qt::CheckState)settings.value("010").toUInt() == Qt::Checked)
     {
@@ -136,7 +137,14 @@ void tesThread::testNetwork(QString DIRPATH)
         //Displays all active TCP connections and the TCP and UDP ports on which the computer is listening.
     }
 
+    QString qarp_a = "/c arp -a >> " +
+                   qnetRes + "\\arp.txt";
 
+    if((Qt::CheckState)settings.value("020").toUInt() == Qt::Checked)
+    {
+        createProcess(qarp_a);
+        //Displays all active TCP connections and the TCP and UDP ports on which the computer is listening.
+    }
 
 }
 
@@ -206,15 +214,15 @@ void tesThread::testGen_hard(QString DIRPATH)
     if(file.open(QIODevice::ReadWrite))
     {
         QTextStream stream(&file);
-        stream << "[Local Host]" << endl << localHostName() << endl << endl;
-        stream << "[CPU]" << endl << cpu() << endl << endl;
-        stream << "[BIOS]" << endl << "Processor ID: " << getWMIC("wmic cpu get processorid") << endl << endl;
-        //stream << "[Video Card(GPU)]" << endl;
+        stream << "[Local Host]\n" << localHostName() << "\n\n";
+        stream << "[CPU]" << "\n" << cpu() << "\n" << "\n";
+        stream << "[BIOS]" << "\n" << "Processor ID: " << getWMIC("wmic cpu get processorid") << "\n" << "\n";
+        //stream << "[Video Card(GPU)]" << "\n";
 
-        //stream << endl << endl;
-        stream << "[Disk]" << endl << disk() << endl;
-        stream << "[Memory(RAM)]" << endl << ram() << endl << endl;
-        //stream << "[Monitor/Screen]" << endl << screen() << endl << endl;
+        //stream << "\n" << "\n";
+        stream << "[Disk]" << "\n" << disk() << "\n";
+        stream << "[Memory(RAM)]" << "\n" << ram() << "\n" << "\n";
+        //stream << "[Monitor/Screen]" << "\n" << screen() << "\n" << "\n";
     }
     file.close();
 
@@ -227,16 +235,15 @@ void tesThread::winInfo(QString DIRPATH)
     if(file.open(QIODevice::ReadWrite))
     {
         QTextStream stream(&file);
-        stream << "Windows Version: " << QSysInfo::WindowsVersion << endl;
-        stream << "Build Abi: " << QSysInfo::buildAbi() << endl;
-        stream << "Build CPU Architecture: " << QSysInfo::buildCpuArchitecture() << endl;
-        stream << "Current CPU Architecture: " << QSysInfo::currentCpuArchitecture() << endl;
-        stream << "Kernel Type: " << QSysInfo::kernelType() << endl;
-        stream << "Kernel Version: " << QSysInfo::kernelVersion() << endl;
-        stream << "Machine Hostname: " << QSysInfo::machineHostName() << endl;
-        stream << "Pretty Product Name: " << QSysInfo::prettyProductName() << endl;
-        stream << "Product Type: " << QSysInfo::productType() << endl;
-        stream << "Product Version: " << QSysInfo::productVersion() << endl;
+        stream << "Build Abi: " << QSysInfo::buildAbi() << "\n";
+        stream << "Build CPU Architecture: " << QSysInfo::buildCpuArchitecture() << "\n";
+        stream << "Current CPU Architecture: " << QSysInfo::currentCpuArchitecture() << "\n";
+        stream << "Kernel Type: " << QSysInfo::kernelType() << "\n";
+        stream << "Kernel Version: " << QSysInfo::kernelVersion() << "\n";
+        stream << "Machine Hostname: " << QSysInfo::machineHostName() << "\n";
+        stream << "Pretty Product Name: " << QSysInfo::prettyProductName() << "\n";
+        stream << "Product Type: " << QSysInfo::productType() << "\n";
+        stream << "Product Version: " << QSysInfo::productVersion() << "\n";
     }
     file.close();
 }
@@ -369,9 +376,9 @@ const QString tesThread::screen()
     QList<QSize> screenSizeList;
     QList <int> screenCountList;
 
-    for(int i=0; i<QApplication::desktop() -> screenCount(); i++)
+    for(int i=0; i < QApplication::screens().count(); i++)
     {
-            QRect screenRect = QApplication::desktop() -> screenGeometry(i);
+            QRect screenRect = QApplication::screens().at(i) -> geometry();
             QSize size(screenRect.width(), screenRect.height());
 
             bool bExist = false;
@@ -435,6 +442,10 @@ QString tesThread::getDir()
 {
     QString qconfigPath = QStandardPaths::writableLocation(QStandardPaths::HomeLocation) + "/sysTest.ini";
     QSettings *config = new QSettings(qconfigPath, QSettings::IniFormat);
+    if(config -> value("settings/output").toString() == "")
+    {
+        config -> setValue("settings/output", "C:/");
+    }
     QString qresDir = config -> value("settings/output").toString() + "/Result";
 
     qresDir.replace("/", "\\");

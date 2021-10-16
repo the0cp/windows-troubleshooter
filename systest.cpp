@@ -23,6 +23,7 @@ sysTest::sysTest(QWidget *parent)
 
     ui -> outputDir -> setText(config -> value("settings/output").toString());
 
+
     initTree();
 
     newThread = new QThread;
@@ -47,13 +48,13 @@ void sysTest::initTree()
     QSettings settings("Theodore Cooper", "Theo's System Test Tool");
 
     QTreeWidgetItem *rootNetwork = new QTreeWidgetItem(ui -> selectCmd);
-    rootNetwork -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt:: ItemIsSelectable);
+    rootNetwork -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
     rootNetwork -> setText(0, "Network");
     rootNetwork -> setText(1, "Test Network");
 
         QTreeWidgetItem *childPing = new QTreeWidgetItem(rootNetwork);
         childPing -> setText(0, "PING");
-        childPing -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt:: ItemIsSelectable);
+        childPing -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 
 
             QTreeWidgetItem *childPing_l = new QTreeWidgetItem(childPing);
@@ -70,8 +71,7 @@ void sysTest::initTree()
 
         QTreeWidgetItem *childNetstat = new QTreeWidgetItem(rootNetwork);
         childNetstat -> setText(0, "NETSTAT");
-        childNetstat -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt:: ItemIsSelectable);
-
+        childNetstat -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 
             QTreeWidgetItem *childNetstat_r = new QTreeWidgetItem(childNetstat);
             childNetstat_r -> setText(0, "-r");
@@ -86,6 +86,13 @@ void sysTest::initTree()
             childNetstat_a -> setText(1, "all active TCP connections & TCP/UDP ports on which the computer is listening");
 
 
+        QTreeWidgetItem *childArp = new QTreeWidgetItem(rootNetwork);
+        childArp -> setText(0, "ARP");
+        childArp -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
+
+            QTreeWidgetItem *childArp_a = new QTreeWidgetItem(childArp);
+            childArp_a -> setText(0, "-a");
+            childArp_a -> setText(1, "ARP table for a particular IP address");
 
 
     QTreeWidgetItem *rootPCInfo = new QTreeWidgetItem(ui -> selectCmd);
@@ -95,7 +102,7 @@ void sysTest::initTree()
 
         QTreeWidgetItem *childBasic = new QTreeWidgetItem(rootPCInfo);
         childBasic -> setText(0, "Basic");
-        childBasic -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt:: ItemIsSelectable);
+        childBasic -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 
             QTreeWidgetItem *childBasic_win = new QTreeWidgetItem(childBasic);
             childBasic_win -> setText(0, "Windows' info");
@@ -107,7 +114,7 @@ void sysTest::initTree()
 
         QTreeWidgetItem *childAdvan = new QTreeWidgetItem(rootPCInfo);
         childAdvan -> setText(0, "Advanced");
-        childAdvan -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt:: ItemIsSelectable);
+        childAdvan -> setFlags(Qt::ItemIsUserCheckable | Qt::ItemIsEnabled | Qt::ItemIsSelectable);
 
             QTreeWidgetItem *childAdvan_hardware = new QTreeWidgetItem(childAdvan);
             childAdvan_hardware -> setText(0, "Hardware");
@@ -132,6 +139,8 @@ void sysTest::initTree()
                     childNetstat_r -> setCheckState(0, Qt::Checked);
                     childNetstat_n -> setCheckState(0, Qt::Checked);
                     childNetstat_a -> setCheckState(0, Qt::Unchecked);
+                childArp -> setCheckState(0, Qt::Checked);
+                    childArp_a -> setCheckState(0, Qt::Checked);
             rootPCInfo -> setCheckState(0, Qt::Checked);
                 childBasic -> setCheckState(0, Qt::Checked);
                     childBasic_win -> setCheckState(0, Qt::Checked);
@@ -150,6 +159,8 @@ void sysTest::initTree()
                 childNetstat_r -> setCheckState(0, (Qt::CheckState)settings.value("010").toUInt());
                 childNetstat_n -> setCheckState(0, (Qt::CheckState)settings.value("011").toUInt());
                 childNetstat_a -> setCheckState(0, (Qt::CheckState)settings.value("012").toUInt());
+            childArp -> setCheckState(0, (Qt::CheckState)settings.value("02").toUInt());
+                childArp_a -> setCheckState(0, (Qt::CheckState)settings.value("020").toUInt());
 
             childBasic -> setCheckState(0, (Qt::CheckState)settings.value("10").toUInt());
                 childBasic_win -> setCheckState(0, (Qt::CheckState)settings.value("100").toUInt());
@@ -306,8 +317,7 @@ void sysTest::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-
-void sysTest::on_pushButton_clicked()
+void sysTest::on_btn_config_clicked()
 {
     ui -> tabWidget -> setCurrentIndex(1);
 }
